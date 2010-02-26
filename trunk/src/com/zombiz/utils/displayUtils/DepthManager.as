@@ -72,7 +72,10 @@ package com.zombiz.utils.displayUtils
 		{
 			if(!pDisplayObjectContainer) throw new Error(DepthManager + " Le displayObject ne peut pas être null");
 			
+			trace("Hello world");
 			return Math.max(0, pDisplayObjectContainer.numChildren - 1);
+
+			
 		}
 		
 		
