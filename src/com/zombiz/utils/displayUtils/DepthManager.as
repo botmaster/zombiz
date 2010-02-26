@@ -52,6 +52,7 @@ package com.zombiz.utils.displayUtils
 			
 		// CONSTRUCTOR
 		// ----------------------------------------
+
 		public function DepthManager() 
 		{
 			throw new Error( this + " Ne pas instancier cette classe utilitaire" );
