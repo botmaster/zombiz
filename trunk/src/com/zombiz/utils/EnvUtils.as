@@ -36,6 +36,7 @@ package com.zombiz.utils
 	import flash.system.Capabilities;
 	
 	/**
+	 * 
 	 * Classe utilitaire qui permet d'avoir des infos sur l'environnement du player.
 	 * @author Pascal Achard
 	 * @version 1.0
