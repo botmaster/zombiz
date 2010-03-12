@@ -32,81 +32,51 @@
 
 package com.zombiz.layout 
 {
-	
-	import com.zombiz.layout.ALayout;
 	import flash.geom.Point;
 	
-
-
 	/**
-	 * Layout Grid.
+	 * Flow grid.
 	 * @author Pascal Achard
 	 */
 	
-	 //TODO: Mettre en place le snapToPixel.
-	 
-	public class Grid extends ALayout
+	public class Flow extends ALayout
 	{
 		
 		// PROPERTIES
 		// ----------------------------------------
-		
 		private var _x:Number;							// La position en x du layout.
 		private var _y:Number;							// La position en y du layout.
-		private var _colWidth:Number;					// L'espacement en x.
-		private var _rowHeigh:Number;					// L'espacement en y.
-		private var _snapToPixel:Boolean;				// On calle au pixel ?
-		private var _nbColomns:int;						// Le nombre de colonnes, ou de lignes si vertical.
+		private var _width:int;							// La largeur du layout.
+		private var _height:int;						// La hauteur du layout.
 		private var _isVertical:Boolean;				// Si true, on empile des colonnes, si false on empile des lignes.
+		private var _snapToPixel:Boolean;				// On calle au pixel ?
 		private var _index:int;							// On index les points.
 		
 		// GETTERS - SETTERS
 		// ----------------------------------------
 			
 		// CONSTRUCTOR
-		// ----------------------------------------
-		public function Grid(pX:Number, pY:Number, pColWidth:Number, pRowHeigh:Number, pNbColumns:uint, pIsVertical:Boolean = false, pSnapToPixel:Boolean = true) 
+		// ----------------------------------------		
+		public function Flow(pX:Number, pY:Number, pWidth:Number, pHeigh:Number, pIsVertical:Boolean, pSnapToPixel:Boolean) 
 		{
-			super();
 			_x = pX;
 			_y = pY;
-			_colWidth = pColWidth;
-			_rowHeigh = pRowHeigh;
-			_nbColomns = pNbColumns;
-			_snapToPixel = pSnapToPixel;
+			_width = pWidth;
+			_height = pHeigh;
 			_isVertical = pIsVertical;
+			_snapToPixel = pSnapToPixel;
 			_index = 0;
-			
 		}
 		
 		// METHODS
 		// ----------------------------------------
+		
 		override public function getNextPoint():Point 
 		{
 			var point:Point = new Point();
-			var row:int;
-			var col:int;
-			if (_isVertical)
-			{
-				col = Math.floor(_index / _nbColomns);
-				row = _index % _nbColomns;
-				point.x = _x + (col * _colWidth);
-				point.y = _y + (row * _rowHeigh);
-			}else
-			{
-				row = Math.floor(_index / _nbColomns);
-				col = _index % _nbColomns;
-				point.x = _x + (col * _colWidth);
-				point.y = _y + (row * _rowHeigh);
-			}
 			
-			++ _index;	
 			return point;
 		}
-		
-		// EVENTS HANDLERS
-		// ----------------------------------------
-		
 	}
-
+	
 }
