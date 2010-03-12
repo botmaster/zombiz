@@ -1,13 +1,10 @@
-#summary One-sentence summary of this page.
+#labels Tools,development,as3,FlashDevelop
+Cette page contient les logiciels, et les outils que l'équipe utilise pour le développement du framework zombiz. (Plus généralement pour le développement ActionScript)
 
-= Introduction =
+=Liste des logiciels:=
 
-Add your content here.
+*FlashDevelop:* [http://www.flashdevelop.org/wikidocs/index.php?title=Main_Page http://www.flashdevelop.org/wikidocs/index.php?title=Main_Page]
 
-
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+C'est un éditeur de texte, il supporte l'AS2, l'AS3, le MXML, et autres..
+L'auto-complétion et la coloration syntaxique font le gros avantage de cet éditeur. L'installation est facile, il est simple à prendre en main, l'équipe de développement de l'éditeur sont assez réactifs aux bugs, des maj régulières sont faites.
+ 
