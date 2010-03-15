@@ -39,7 +39,7 @@ package com.zombiz.layout
 	 * @author Pascal Achard
 	 */
 	
-	public class GridPoint 
+	public class LayoutPoint 
 	{
 		
 		// PROPERTIES
@@ -91,9 +91,8 @@ package com.zombiz.layout
 			
 		// CONSTRUCTOR
 		// ----------------------------------------
-		public function GridPoint(pItem:DisplayObject = null, pCol:int = -1, pRow:int = -1, pX:int = 0, pY:int = 0 ) 
+		public function LayoutPoint(pItem:DisplayObject = null, pCol:int = -1, pRow:int = -1, pX:int = 0, pY:int = 0 ) 
 		{
-			
 			_displayItem 	= pItem;
 			_col 			= pRow;
 			_row 			= pRow;
