@@ -60,16 +60,17 @@ package com.zombiz.layout
 		
 		final public function addToLayout(object:DisplayObject):void
 		{
-			var point:Point = getNextPoint();
-			object.x = point.x;
-			object.y = point.y;
+			var layoutPoint:LayoutPoint = getNextPoint();
+			layoutPoint.displayItem = object;
+			layoutPoint.displayItem.x = layoutPoint.x
+			layoutPoint.displayItem.y = layoutPoint.y;
 		}
 		
 		/**
 		 * Méthode abstraite, doit être redéfinies par sa sous-classe.
 		 * @return
 		 */
-		public function getNextPoint():Point
+		public function getNextPoint():LayoutPoint
 		{
 			throw new Error ("Cette méthode est abstraite et doit être redéfinie dans les sous-classes");
 			return null;

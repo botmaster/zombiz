@@ -32,6 +32,7 @@
 
 package com.zombiz.layout 
 {
+	import com.zombiz.layout.LayoutPoint;
 	import flash.geom.Point;
 	
 	/**
@@ -71,11 +72,9 @@ package com.zombiz.layout
 		// METHODS
 		// ----------------------------------------
 		
-		override public function getNextPoint():Point 
+		override public function getNextPoint():LayoutPoint 
 		{
-			var point:Point = new Point();
 			
-			return point;
 		}
 	}
 	

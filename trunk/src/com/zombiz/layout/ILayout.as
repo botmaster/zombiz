@@ -56,7 +56,7 @@ package com.zombiz.layout
 		 * Retourne le prochain point disponible du layout.
 		 * @return 
 		 */
-		function getNextPoint():Point;
+		function getNextPoint():LayoutPoint;
 	}
 	
 }

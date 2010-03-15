@@ -81,27 +81,31 @@ package com.zombiz.layout
 		
 		// METHODS
 		// ----------------------------------------
-		override public function getNextPoint():Point 
+		override public function getNextPoint():LayoutPoint 
 		{
-			var point:Point = new Point();
+			var layoutPoint:LayoutPoint = new LayoutPoint();
 			var row:int;
 			var col:int;
 			if (_isVertical)
 			{
 				col = Math.floor(_index / _nbColomns);
 				row = _index % _nbColomns;
-				point.x = _x + (col * _colWidth);
-				point.y = _y + (row * _rowHeigh);
+				layoutPoint.x = _x + (col * _colWidth);
+				layoutPoint.y = _y + (row * _rowHeigh);
+				
 			}else
 			{
 				row = Math.floor(_index / _nbColomns);
 				col = _index % _nbColomns;
-				point.x = _x + (col * _colWidth);
-				point.y = _y + (row * _rowHeigh);
+				layoutPoint.x = _x + (col * _colWidth);
+				layoutPoint.y = _y + (row * _rowHeigh);
 			}
 			
+			layoutPoint.col = col;
+			layoutPoint.row = row;
+			
 			++ _index;	
-			return point;
+			return layoutPoint;
 		}
 		
 		// EVENTS HANDLERS
