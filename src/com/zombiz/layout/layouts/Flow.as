@@ -32,6 +32,9 @@
 
 package com.zombiz.layout.layouts 
 {
+	import com.zombiz.layout.layoutpoints.BasicLayoutPoint;
+	import com.zombiz.layout.layoutpoints.FlowLayoutPoint;
+	import com.zombiz.layout.layoutpoints.ILayoutPoint;
 	import flash.display.DisplayObject;
 	
 	/**
@@ -46,30 +49,65 @@ package com.zombiz.layout.layouts
 		private var _x:Number;							// La position en x du layout.
 		private var _y:Number;							// La position en y du layout.
 		private var _width:Number;						// La largeur du flow.
+		private var _hPadding:Number;					// Le padding horizonatal.
+		private var _vPadding:Number;					// Le padding vertical.
 		private var _isVertical:Boolean;
 		private var _snapToPixel:Boolean;
+		private var _index:int;
 		
 		// GETTERS - SETTERS
 		// ----------------------------------------
 			
 		// CONSTRUCTOR
 		// ----------------------------------------		
-		public function Flow(pX:Number, pY:Number, pWidth:Number, pIsVertical:Boolean = false, pSnapToPixel:Boolean = true) 
+		public function Flow(pX:Number, pY:Number, pWidth:Number, pHPadding:Number = 0, pVPadding:Number = 0, pIsVertical:Boolean = false, pSnapToPixel:Boolean = true) 
 		{
 			super();
 			_x = pX;
 			_y = pY;
+			_hPadding = pHPadding;
+			_vPadding = pVPadding;
 			_isVertical = pIsVertical;
 			_snapToPixel = pSnapToPixel;
 			_width = pWidth;
-			
+			_index = 0;
 		}
 		
 		// METHODS
 		// ----------------------------------------
 		override public function addToLayout(pDisplayItem:DisplayObject):void 
 		{
-			throw new Error("Ce layout n'est pas terminé !!!");
+			// On créer le point.
+			var layoutPoint:ILayoutPoint = new FlowLayoutPoint(pDisplayItem);
+			
+			// On stock le point.
+			_addLayoutPoint(layoutPoint);
+		
+			
+			// On positionne le point.
+			if (_layoutPointsList.length <= 1)
+			{
+				layoutPoint.x = _x;
+				layoutPoint.y = _y;
+			}
+			else 
+			{
+				var prevPoint:ILayoutPoint = _layoutPointsList[_index -1] as ILayoutPoint;
+				layoutPoint.x = prevPoint.x + prevPoint.displayObject.width + _hPadding;
+				layoutPoint.y = prevPoint.y;
+			}
+			
+			if (layoutPoint.x + layoutPoint.displayObject.width >= _width)
+			{
+				layoutPoint.x = _x;
+				layoutPoint.y = prevPoint.y + FlowLayoutPoint.maxHeight + _vPadding;
+			}
+			
+			_moveToCoord();
+			
+			
+			
+			++ _index;
 		}
 		
 	}
