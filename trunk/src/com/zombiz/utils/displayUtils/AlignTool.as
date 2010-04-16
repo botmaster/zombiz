@@ -42,7 +42,7 @@ package com.zombiz.utils.displayUtils
 	 * @version 1.0
 	 * 
 	 * @example <listing version="3.0"> 
-	 * 	AlignTool.alignCenter(rect, $ref);
+	 * 	AlignTool.alignCenter(rect, ref);
 	 * </listing> 
 	 */
 	
