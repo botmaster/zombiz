@@ -139,7 +139,7 @@ package com.zombiz.utils.displayUtils
 		 * @param	pStage	Le stage.
 		 * @param	pXPadding = 0	Le décalage.
 		 */
-		public static function alignToStageH(pWho:DisplayObject, pStage:Stage, pPadding:Number = 0):void 
+		public static function alignToStageCenterH(pWho:DisplayObject, pStage:Stage, pPadding:Number = 0):void 
 		{
 			pWho.x = (pStage.stageWidth - pWho.width) >> 1;
 		}
@@ -150,7 +150,7 @@ package com.zombiz.utils.displayUtils
 		 * @param	pStage	Le stage.
 		 * @param	pXPadding = 0	Le décalage.
 		 */
-		public static function alignToStageV(pWho:DisplayObject, pStage:Stage, pPadding:Number = 0):void 
+		public static function alignToStageCenterV(pWho:DisplayObject, pStage:Stage, pPadding:Number = 0):void 
 		{
 			pWho.y = (pStage.stageHeight - pWho.height) >> 1;
 		}
@@ -161,10 +161,10 @@ package com.zombiz.utils.displayUtils
 		 * @param	pStage	Le stage.
 		 * @param	pXPadding = 0	Le décalage.
 		 */
-		public static function alignToStage(pWho:DisplayObject, pStage:Stage, pPadding:Number = 0):void 
+		public static function alignToStageCenter(pWho:DisplayObject, pStage:Stage, pPadding:Number = 0):void 
 		{
-			AlignTool.alignToStageH(pWho, pStage, pPadding);
-			AlignTool.alignToStageV(pWho, pStage, pPadding);
+			AlignTool.alignToStageCenterH(pWho, pStage, pPadding);
+			AlignTool.alignToStageCenterV(pWho, pStage, pPadding);
 		}
 		
 	}
