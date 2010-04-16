@@ -101,10 +101,12 @@ package com.zombiz.utils
 		
 		static public function toString():String 
 		{
-			var output:String = "PLATFORM: " + PlayerInfosUtils.getPlatform() + "\n" +
+			var output:String = "----------------------------\n" +
+								"PLATFORM: " + PlayerInfosUtils.getPlatform() + "\n" +
 								"MAJOR_VERSION: " + PlayerInfosUtils.getMajorVersion() + "\n" +
 								"MINOR_VERSION: " + PlayerInfosUtils.getMinorVersion() + "\n" +
-								"BUILD_NUMBER: " + PlayerInfosUtils.getBuildNumber();
+								"BUILD_NUMBER: " + PlayerInfosUtils.getBuildNumber() + "\n" +
+								"-----------------------------\n";
 			return output;
 			/*// On affiche les infos du player.			
 			MonsterDebugger.trace(this, "PLATFORM: " + PlayerInfosUtils.getPlatform(), MonsterDebugger.COLOR_INFO);
