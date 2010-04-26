@@ -1,4 +1,4 @@
-﻿/*
+/*
  * ZOMBIZ ActionScript 3 Framework
  * 
  *                     _     _     
@@ -30,35 +30,62 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.zombiz.data.collection 
+package com.zombiz.data.collection.simplecollection 
 {
+	
 	import com.zombiz.data.collection.ICollection;
 	import com.zombiz.data.iterator.ArrayIterator;
 	import com.zombiz.data.iterator.IIterator;
 	
+
+
 	/**
-	 * Classe qui gère les méthode de base d'une collection. Cette classe peut être étendue pour créer un nouveau type de collection et ajouter des fonctionnalités.
+	 * Une colleciton simple qui ajoute des fonctionnalités à Array.
+	 * TODO: Compléter cette classe.
 	 * @author Pascal Achard
-	 * @since 04/16/2010.
+	 * @since 04/24/2010.
 	 * @version 1.0
 	 */
 	
-	public class Collection implements ICollection
+	public class SimpleCollection implements ICollection
 	{
 		
+		// PROPERTIES
+		// ----------------------------------------
 		protected var _items:Array;
 		
-		public function Collection() 
+		// GETTERS - SETTERS
+		// ----------------------------------------
+		public function get isEmpty():Boolean 
+		{
+			return !_items.length;
+		}
+			
+		// CONSTRUCTOR
+		// ----------------------------------------
+		public function SimpleCollection() 
 		{
 			_items = new Array();
 		}
 		
 		/* INTERFACE com.zombiz.data.collection.ICollection */
 		
-		public function getIterator():IIterator
+		public function add(pValue:*):Boolean
+		{
+			_items.push(pValue);
+			return true;
+		}
+		
+		public function getIterator(pType:String = null):IIterator
 		{
 			return new ArrayIterator(_items);
 		}
+		
+		// METHODS
+		// ----------------------------------------
+		
+		// EVENTS HANDLERS
+		// ----------------------------------------
 		
 	}
 

@@ -39,9 +39,9 @@ package com.zombiz.data.collection
 	 * @author Pascal Achard
 	 */
 	
-	public interface ICollection 
+	public interface ICollection extends IIterableAggreagate
 	{
-		function getIterator():IIterator; 		
+		function add(pValue:*):Boolean;
 	}
 	
 }
