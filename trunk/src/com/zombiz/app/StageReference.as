@@ -32,40 +32,53 @@
 
 package com.zombiz.app 
 {
-	import flash.display.MovieClip;
-	import flash.events.Event;
+	import flash.display.Stage;
 	
+
+
 	/**
-	 * Permet d'avoir un accès sécurisé au stage.
-	 * Votre classe principale doit étendre cette classe.
+	 * Stock une référence au stage.
 	 * @author Pascal Achard
-	 * @since 28/04/2010
-	 * @version 1.0.0
 	 */
 	
-	public class BaseApp extends MovieClip
+	public class StageReference
 	{
 		
-		public function BaseApp() 
-		{
-			if (stage) {
-				StageReference.setStage(stage);
-			}
-			else
-			{
-				// On écoute l'ajout au stage.
-				addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
-			}
-		}
 		
-		private function addedToStageHandler(e:Event):void 
-		{
-			removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
+		// PROPERTIES
+		// ----------------------------------------
+		static private var _stage:Stage;
+		
 			
-			// affecte une référence à l'objet Stage
-			StageReference.setStage(stage);
+		// CONSTRUCTOR
+		// ----------------------------------------
+		public function StageReference() 
+		{
+			throw new Error("Ne pas instancier cette classe");
 		}
 		
+		// METHODS
+		// ----------------------------------------
+		
+		/**
+		 * Définit la référence au stage.
+		 * @param	pStage	Le stage.
+		 */
+		public static function setStage(pStage:Stage):void 
+		{
+			_stage = pStage;
+		}
+		
+		/**
+		 * Retourne la réf du stage.
+		 * @return	Le stage.
+		 */
+		public static function getStage():Stage 
+		{
+			return _stage;
+		}
+		
+
 	}
-	
+
 }
