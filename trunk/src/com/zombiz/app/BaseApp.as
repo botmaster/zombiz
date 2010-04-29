@@ -1,4 +1,4 @@
-﻿/*
+/*
  * ZOMBIZ ActionScript 3 Framework
  * 
  *                     _     _     
@@ -30,55 +30,36 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.zombiz.utils 
+package com.zombiz.app 
 {
+	import flash.display.MovieClip;
+	import flash.events.Event;
 	
 	/**
-	 * Classe utilitaire de gestion des randoms.
+	 * Permet d'avoir un accès sécurisé au stage.
+	 * Votre classe principale doit étendre cette classe.
 	 * @author Pascal Achard
-	 * @since 04/16/10
-	 * @version 1.0
+	 * @since 28/04/2010
+	 * @version 1.0.0
 	 */
-	public class RandomUtils 
+	
+	public class BaseApp extends MovieClip
 	{
 		
-		public function RandomUtils() 
+		public function BaseApp() 
 		{
-			throw new Error( this + " Ne pas instancier cette classe utilitaire" );
+			if (stage) STAGE = stage;
+			
+			// On écoute l'ajout au stage.
+			addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
 		}
 		
-		/**
-		 * Retourne une valeure flotantte aléatoire entre deux valeurs.
-		 * @param	pMin	La valeur minimum.
-		 * @param	pMax	La valeur maximum.
-		 * @return	La valeur random.
-		 * @throws	Error Une erreur si la valeur maximale est supérieur à la valeur minimale.
-		 */
-		public static function randomFloat(pMin:Number, pMax:Number):Number
+		private function addedToStageHandler(e:Event):void 
 		{
-			if (pMax < pMin) throw new Error("La valeur maximale ne peux pas être supérieur à la valeur minimale.");
-			return _random() * (pMax - pMin) + pMin;
-		}
-		
-		public static function randomInt(pMin:Number, pMax:Number):int 
-		{
-			if (pMax < pMin) throw new Error("La valeur maximale ne peux pas être supérieur à la valeur minimale.");
-			return int(randomFloat(pMin, pMax));
-		}
-		
-		/**
-		 * Retoune true ou false aléatoirement
-		 * @return true ou false;
-		 */
-		public static function trueOrFalse():Boolean 
-		{
-			return _random() < 0.5;
-		}
-		
-		
-		protected static function _random():Number 
-		{
-			return Math.random();
+			removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
+			
+			// affecte une référence à l'objet Stage
+			STAGE = stage;
 		}
 		
 	}

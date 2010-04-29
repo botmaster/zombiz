@@ -1,4 +1,4 @@
-﻿/*
+/*
  * ZOMBIZ ActionScript 3 Framework
  * 
  *                     _     _     
@@ -30,56 +30,18 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.zombiz.utils 
+package com.zombiz 
 {
 	
 	/**
-	 * Classe utilitaire de gestion des randoms.
+	 * Info sur le framework.
 	 * @author Pascal Achard
-	 * @since 04/16/10
-	 * @version 1.0
 	 */
-	public class RandomUtils 
+	public class Zombiz
 	{
 		
-		public function RandomUtils() 
-		{
-			throw new Error( this + " Ne pas instancier cette classe utilitaire" );
-		}
-		
-		/**
-		 * Retourne une valeure flotantte aléatoire entre deux valeurs.
-		 * @param	pMin	La valeur minimum.
-		 * @param	pMax	La valeur maximum.
-		 * @return	La valeur random.
-		 * @throws	Error Une erreur si la valeur maximale est supérieur à la valeur minimale.
-		 */
-		public static function randomFloat(pMin:Number, pMax:Number):Number
-		{
-			if (pMax < pMin) throw new Error("La valeur maximale ne peux pas être supérieur à la valeur minimale.");
-			return _random() * (pMax - pMin) + pMin;
-		}
-		
-		public static function randomInt(pMin:Number, pMax:Number):int 
-		{
-			if (pMax < pMin) throw new Error("La valeur maximale ne peux pas être supérieur à la valeur minimale.");
-			return int(randomFloat(pMin, pMax));
-		}
-		
-		/**
-		 * Retoune true ou false aléatoirement
-		 * @return true ou false;
-		 */
-		public static function trueOrFalse():Boolean 
-		{
-			return _random() < 0.5;
-		}
-		
-		
-		protected static function _random():Number 
-		{
-			return Math.random();
-		}
+		public static const NAME:String			= "zombiz";
+		public static const VERSION:String		= "0.5.0 Alpha";
 		
 	}
 	
