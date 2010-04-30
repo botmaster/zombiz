@@ -42,7 +42,7 @@ package com.zombiz.layout.layoutpoints
 			
 		// CONSTRUCTOR
 		// ----------------------------------------
-		public function GridLayoutPoint(pDisplayObject:DisplayObject, pX:Number = 0, pY:Number = 0, pRotation:Number = 0, pRow:int = -1, pCol:int = -1) 
+		public function GridLayoutPoint(pDisplayObject:DisplayObject = null, pX:Number = 0, pY:Number = 0, pRotation:Number = 0, pRow:int = -1, pCol:int = -1) 
 		{
 			super(pDisplayObject, pX, pY, pRotation);
 			
