@@ -60,9 +60,9 @@ package com.zombiz.loader
 		// PROPERTIES
 		// ----------------------------------------
 		
-		public static const SCALE_OUT:String = "scaleToWidth";
-		public static const SCALE_IN:String = "scaleToContent";
-		public static const SCALE_STRETCH:String = "scaleStretch"; 
+		public static const SCALE_OUT:String = "SCALE_OUT";
+		public static const SCALE_IN:String = "SCALE_IN";
+		public static const SCALE_STRETCH:String = "SCALE_STRETCH"; 
 		public static const NO_SCALE:String = "NO_SCALE"; 
 		
 		private var _loader:Loader;
@@ -175,8 +175,8 @@ package com.zombiz.loader
 			switch (_scaleMode) 
 			{
 				case MediaLoader.SCALE_IN:
-					ratio = Math.min ( _width / loadedContent.width,  height / loadedContent.height );
-					if ( ratio < 1 ) scaleX = scaleY = ratio;
+					ratio = Math.min ( _width / loadedContent.width,  _height / loadedContent.height );
+					scaleX = scaleY = ratio;
 				break;
 				case MediaLoader.SCALE_OUT:
 					ratio = Math.max ( _width / loadedContent.width,  _height / loadedContent.height );
@@ -188,7 +188,7 @@ package com.zombiz.loader
 				break;
 				
 				case MediaLoader.NO_SCALE:
-				default:
+				default:	
 				
 				break;
 			}
