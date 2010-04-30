@@ -87,19 +87,21 @@ package com.zombiz.layout.layouts
 		
 			
 			// On positionne le point.
+			var prevPoint:ILayoutPoint;
 			if (_layoutPointsList.length <= 1)
 			{
 				layoutPoint.x = _x;
 				layoutPoint.y = _y;
+				prevPoint = layoutPoint;
 			}
 			else 
 			{
-				var prevPoint:ILayoutPoint = _layoutPointsList[_index -1] as ILayoutPoint;
+				prevPoint = _layoutPointsList[_index -1] as ILayoutPoint;
 				layoutPoint.x = prevPoint.x + prevPoint.displayObject.width + _hPadding;
 				layoutPoint.y = prevPoint.y;
 			}
 			
-			if (layoutPoint.x + layoutPoint.displayObject.width >= _width)
+			if (layoutPoint.x + layoutPoint.displayObject.width >= _width + _x)
 			{
 				layoutPoint.x = _x;
 				layoutPoint.y = prevPoint.y + FlowLayoutPoint.maxHeight + _vPadding;

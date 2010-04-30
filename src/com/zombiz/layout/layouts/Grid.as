@@ -7,6 +7,7 @@ package com.zombiz.layout.layouts
 {
 	
 	import com.zombiz.layout.layoutpoints.GridLayoutPoint;
+	import com.zombiz.layout.layoutpoints.ILayoutPoint;
 	import com.zombiz.layout.layouts.ALayout;
 	import flash.display.DisplayObject;
 	
@@ -27,16 +28,18 @@ package com.zombiz.layout.layouts
 		private var _colWidth:Number;					// L'espacement en x.
 		private var _rowHeigh:Number;					// L'espacement en y.
 		private var _snapToPixel:Boolean;				// On calle au pixel ?
-		private var _nbColomns:int;						// Le nombre de colonnes, ou de lignes si vertical.
+		private var _nbColomns:int;						// Le nombre de colonnes.
+		private var _nbRow:int;							// Le nombre de ligne.
 		private var _isVertical:Boolean;				// Si true, on empile des colonnes, si false on empile des lignes.
 		private var _index:int;
+		private var _maxPoints:int;
 		
 		// GETTERS - SETTERS
 		// ----------------------------------------
 			
 		// CONSTRUCTOR
 		// ----------------------------------------
-		public function Grid(pX:Number, pY:Number, pColWidth:Number, pRowHeigh:Number, pNbColumns:uint, pIsVertical:Boolean = false, pSnapToPixel:Boolean = true) 
+		public function Grid(pX:Number, pY:Number, pColWidth:Number, pRowHeigh:Number, pNbColumns:uint, pNbRows:uint, pIsVertical:Boolean = false, pSnapToPixel:Boolean = true) 
 		{
 			super();
 			_x = pX;
@@ -44,43 +47,53 @@ package com.zombiz.layout.layouts
 			_colWidth = pColWidth;
 			_rowHeigh = pRowHeigh;
 			_nbColomns = pNbColumns;
+			_nbRow = pNbRows;
 			_snapToPixel = pSnapToPixel;
 			_isVertical = pIsVertical;
 			_index = 0;
+			
+			_maxPoints = pNbColumns * pNbRows;
+			
+			buildGrid();
 		}
 		
 		// METHODS
 		// ----------------------------------------
 		
-		override public function addToLayout(pDisplayItem:DisplayObject):void 
+		protected function buildGrid():void
 		{
 			
-			var layoutPoint:GridLayoutPoint = new GridLayoutPoint(pDisplayItem);
+			var layoutPoint:GridLayoutPoint = new GridLayoutPoint();
 			var row:int;
 			var col:int;
-			if (_isVertical)
+			
+			for (var i:int = 0; i < _maxPoints; i++) 
 			{
-				col = Math.floor(_index / _nbColomns);
-				row = _index % _nbColomns;
-				layoutPoint.x = _x + (col * _colWidth);
-				layoutPoint.y = _y + (row * _rowHeigh);
+				layoutPoint = new GridLayoutPoint();
+				row = Math.floor(i / _nbColomns);
+				col = i % _nbColomns;
 				
-			}else
-			{
-				row = Math.floor(_index / _nbColomns);
-				col = _index % _nbColomns;
+				layoutPoint.col = col;
 				layoutPoint.x = _x + (col * _colWidth);
 				layoutPoint.y = _y + (row * _rowHeigh);
+				layoutPoint.row = row;
+				
+				_addLayoutPoint(layoutPoint);
+			}
+		}
+		
+		override public function addToLayout(pDisplayItem:DisplayObject):void 
+		{
+			var point:GridLayoutPoint = _layoutPointsList[_index];
+			
+			if (point)
+			{
+				point.displayObject = pDisplayItem;
+				_moveToCoord();
 			}
 			
-			layoutPoint.col = col;
-			layoutPoint.row = row;
 			
-			_addLayoutPoint(layoutPoint);
-			
-			_moveToCoord();
-			
-			++ _index;
+			_index ++;
 		}
 		
 		// EVENTS HANDLERS

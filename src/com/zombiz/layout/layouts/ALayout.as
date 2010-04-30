@@ -78,8 +78,12 @@ package com.zombiz.layout.layouts
 		{
 			for each (var point:ILayoutPoint in _layoutPointsList) 
 			{
-				point.displayObject.x = point.x;
-				point.displayObject.y = point.y;
+				if (point.displayObject != null)
+				{
+					point.displayObject.x = point.x;
+					point.displayObject.y = point.y;
+				}
+				
 			}
 		}
 		
