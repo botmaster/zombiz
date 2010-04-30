@@ -46,6 +46,7 @@ package com.zombiz.utils.displayUtils
 	 * </listing> 
 	 */
 	
+	 
 	public class AlignTool 
 	{
 		
@@ -102,9 +103,8 @@ package com.zombiz.utils.displayUtils
 		 * Aligne horizontalement un DisplayObject sur un autre DisplayObject.
 		 * @param	pWho	Le DisplayObject à aligner.
 		 * @param	pWith	Le DisplayObject référence.
-		 * @param	pPadding = 0	Le décalage.
 		 */
-		public static function alignCenterH(pWho:DisplayObject, pWith:DisplayObject, pPadding:Number = 0):void 
+		public static function alignCenterH(pWho:DisplayObject, pWith:DisplayObject):void 
 		{
 			pWho.x = pWith.x + ((pWith.width - pWho.width) >> 1);
 		}
@@ -113,9 +113,8 @@ package com.zombiz.utils.displayUtils
 		 * Aligne verticalement un DisplayObject sur un autre DisplayObject.
 		 * @param	pWho	Le DisplayObject à aligner.
 		 * @param	pWith	Le DisplayObject référence.
-		 * @param	pPadding = 0	Le décalage.
 		 */
-		public static function alignCenterV(pWho:DisplayObject, pWith:DisplayObject, pPadding:Number = 0):void 
+		public static function alignCenterV(pWho:DisplayObject, pWith:DisplayObject):void 
 		{
 			pWho.y = pWith.y + ((pWith.height - pWho.height) >> 1);
 		}
@@ -124,12 +123,11 @@ package com.zombiz.utils.displayUtils
 		 * Aligne un DisplayObject sur un autre DisplayObject.
 		 * @param	pWho	Le DisplayObject à aligner.
 		 * @param	pWith	Le DisplayObject référence.
-		 * @param	pPadding = 0	Le décalage.
 		 */
-		public static function alignCenter(pWho:DisplayObject, pWith:DisplayObject, pPadding:Number = 0):void 
+		public static function alignCenter(pWho:DisplayObject, pWith:DisplayObject):void 
 		{
-			AlignTool.alignCenterH(pWho, pWith, pPadding);
-			AlignTool.alignCenterV(pWho, pWith, pPadding);
+			AlignTool.alignCenterH(pWho, pWith);
+			AlignTool.alignCenterV(pWho, pWith);
 		}
 		
 		
@@ -137,9 +135,8 @@ package com.zombiz.utils.displayUtils
 		 * Aligne horizontalement un DisplayObject sur le stage.
 		 * @param	pWho	Le DisplayObject à aligner.
 		 * @param	pStage	Le stage.
-		 * @param	pXPadding = 0	Le décalage.
 		 */
-		public static function alignToStageCenterH(pWho:DisplayObject, pStage:Stage, pPadding:Number = 0):void 
+		public static function alignToStageCenterH(pWho:DisplayObject, pStage:Stage):void 
 		{
 			pWho.x = (pStage.stageWidth - pWho.width) >> 1;
 		}
@@ -150,7 +147,7 @@ package com.zombiz.utils.displayUtils
 		 * @param	pStage	Le stage.
 		 * @param	pXPadding = 0	Le décalage.
 		 */
-		public static function alignToStageCenterV(pWho:DisplayObject, pStage:Stage, pPadding:Number = 0):void 
+		public static function alignToStageCenterV(pWho:DisplayObject, pStage:Stage):void 
 		{
 			pWho.y = (pStage.stageHeight - pWho.height) >> 1;
 		}
@@ -161,10 +158,10 @@ package com.zombiz.utils.displayUtils
 		 * @param	pStage	Le stage.
 		 * @param	pXPadding = 0	Le décalage.
 		 */
-		public static function alignToStageCenter(pWho:DisplayObject, pStage:Stage, pPadding:Number = 0):void 
+		public static function alignToStageCenter(pWho:DisplayObject, pStage:Stage):void 
 		{
-			AlignTool.alignToStageCenterH(pWho, pStage, pPadding);
-			AlignTool.alignToStageCenterV(pWho, pStage, pPadding);
+			AlignTool.alignToStageCenterH(pWho, pStage);
+			AlignTool.alignToStageCenterV(pWho, pStage);
 		}
 		
 	}
