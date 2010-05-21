@@ -104,7 +104,7 @@ package com.zombiz.loader
 			
 			// On écoute le stage.
 			addEventListener(Event.ADDED_TO_STAGE, _addToStageHandler, false, 0, true);
-			addEventListener(Event.REMOVED_FROM_STAGE, _removeFromeStageHandler, false, 0, true);
+			addEventListener(Event.REMOVED_FROM_STAGE, _removeFromStageHandler, false, 0, true);
 			
 		}
 		
@@ -149,9 +149,9 @@ package com.zombiz.loader
 			dispatchEvent(e);	
 		}
 		
-		private function _removeFromeStageHandler(e:Event):void 
+		private function _removeFromStageHandler(e:Event):void 
 		{
-			removeEventListener(Event.REMOVED_FROM_STAGE, _removeFromeStageHandler);
+			removeEventListener(Event.REMOVED_FROM_STAGE, _removeFromStageHandler);
 			
 			_cli.removeEventListener ( Event.INIT, _redirectEvent );
 			_cli.removeEventListener ( Event.OPEN, _redirectEvent );
