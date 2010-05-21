@@ -56,24 +56,48 @@ package com.zombiz.data.collection.simplecollection
 		
 		// GETTERS - SETTERS
 		// ----------------------------------------
-		public function get isEmpty():Boolean 
-		{
-			return !_items.length;
-		}
 			
 		// CONSTRUCTOR
 		// ----------------------------------------
-		public function SimpleCollection() 
+		public function SimpleCollection(pElements:Array = null) 
 		{
-			_items = new Array();
+			if( pElements != null && pElements.length > 0 ) 
+            {   
+                _items = pElements.slice() ;   
+            }            
+            else 
+            {
+                pElements = new Array();
+            }
 		}
 		
+		
+		// METHODS
+		// ----------------------------------------
 		/* INTERFACE com.zombiz.data.collection.ICollection */
 		
 		public function add(pValue:*):Boolean
 		{
+			if (!pValue)
+			{
+				return false;
+			}
 			_items.push(pValue);
-			return true;
+		}
+		
+		public function clear():void
+		{
+			_items.splice(0);
+		}
+		
+		public function size():int
+		{
+			return _items.length;
+		}
+		
+		public function isEmpty():Boolean
+		{
+			return _items.length == 0 ;
 		}
 		
 		public function getIterator(pType:String = null):IIterator
@@ -81,8 +105,10 @@ package com.zombiz.data.collection.simplecollection
 			return new ArrayIterator(_items);
 		}
 		
-		// METHODS
-		// ----------------------------------------
+		public function toArray():Array 
+		{
+			return _items.slice();
+		}
 		
 		// EVENTS HANDLERS
 		// ----------------------------------------

@@ -41,7 +41,34 @@ package com.zombiz.data.collection
 	
 	public interface ICollection extends IIterableAggreagate
 	{
+		
+		/**
+		 * Ajoute un élément à la collection
+		 * @param	pValue
+		 * @return	True si réussi, false si echec.
+		 */
 		function add(pValue:*):Boolean;
+		
+		/**
+		 * supprime tous les éléments de la collection.
+		 */
+		function clear():void;
+		
+		/**
+		 * renvoie le le nombre d'éléments dans la collection.
+		 * @return Le nombre d'éléments.
+		 */
+		function size():int;
+		
+		/**
+		 * Indique si la collection est vide.
+		 * @return true si la collection est vide, false si il y a au moins un élément.
+		 */
+		function isEmpty():Boolean;
+		
+		
+		
+		
 	}
 	
 }
