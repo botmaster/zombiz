@@ -72,6 +72,8 @@ package com.zombiz.loader
 		private var _cli:LoaderInfo;
 		private var _scaleMode:String;
 		
+		private var _content:DisplayObject;
+		
 		// GETTERS - SETTERS
 		// ----------------------------------------
 		public function get scaleMode():String { return _scaleMode; }
@@ -85,6 +87,8 @@ package com.zombiz.loader
 			}
 			_scaleMode = value;
 		}
+		
+		public function get content():DisplayObject { return _content; }
 			
 		// CONSTRUCTOR
 		// ----------------------------------------
@@ -162,11 +166,12 @@ package com.zombiz.loader
 		
 		private function _loadCompleteHandler ( e:Event ):void 
 		{	
-			var loadedContent:DisplayObject = e.target.content;
+			//var loadedContent:DisplayObject = e.target.content;
+			_content = e.target.content;
 			
-			if ( loadedContent is Bitmap ) {
-				Bitmap(loadedContent).pixelSnapping = PixelSnapping.NEVER;
-				Bitmap(loadedContent).smoothing = _smooth;
+			if ( _content is Bitmap ) {
+				Bitmap(_content).pixelSnapping = PixelSnapping.NEVER;
+				Bitmap(_content).smoothing = _smooth;
 			}
 			
 			var ratio:Number;
@@ -175,11 +180,11 @@ package com.zombiz.loader
 			switch (_scaleMode) 
 			{
 				case MediaLoader.SCALE_IN:
-					ratio = Math.min ( _width / loadedContent.width,  _height / loadedContent.height );
+					ratio = Math.min ( _width / _content.width,  _height / _content.height );
 					scaleX = scaleY = ratio;
 				break;
 				case MediaLoader.SCALE_OUT:
-					ratio = Math.max ( _width / loadedContent.width,  _height / loadedContent.height );
+					ratio = Math.max ( _width / _content.width,  _height / _content.height );
 					scaleX = scaleY = ratio;
 				break;
 				case MediaLoader.SCALE_STRETCH:
