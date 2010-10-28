@@ -83,6 +83,17 @@ package com.zombiz.utils
 			cloner.position = 0;
 			return(cloner.readObject());
 		}
+		
+		/**
+		 * Retourne un tableau sous la forme d'une string
+		 * @param	array	Le tableau source
+		 * @param	separator	le séparateur.
+		 * @return	Une chaine
+		 */
+		public static function toString(array:Array, separator:String = ","):String
+		{
+			return (!array) ? "" : array.join(separator);
+		}
 	}
 	
 }
