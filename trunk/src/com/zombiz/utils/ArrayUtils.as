@@ -85,6 +85,23 @@ package com.zombiz.utils
 		}
 		
 		/**
+		 * Mélange un tableau
+		 * @param	pArray	Le tableau à mélanger.
+		 */
+		public static function shuffle(pArray:Array):Array 
+		{
+			var souceArray:Array = ArrayUtils.copy(pArray);
+			var shuffleArray:Array = new Array();
+			while (souceArray.length > 0) 
+			{
+				var index:int = Math.floor(Math.random() * souceArray.length);
+				shuffleArray.push(souceArray[index]);
+				souceArray.splice(index, 1);
+			}
+			return shuffleArray;
+		}
+		
+		/**
 		 * Retourne un tableau sous la forme d'une string
 		 * @param	array	Le tableau source
 		 * @param	separator	le séparateur.
