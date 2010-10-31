@@ -36,74 +36,83 @@ package com.zombiz.app
 	import flash.events.Event;
 	
 	/**
-	 * Permet d'avoir un accès sécurisé au stage.
+	 * Permet d'avoir un accès sécurisé au stage grace à la méthode statique getStage()
 	 * Permet d'éviter le bug d'IE qui renvoi un stage avec les propriétés stageWidth et stageHeight à 0.
 	 * Votre classe principale doit étendre cette classe.
 	 * @author Pascal Achard
 	 * @since 28/04/2010
-	 * @version 1.0.0
+	 * @version 1.0.1
 	 */
 	
 	public class BaseApp extends MovieClip
 	{
+		// PROPERTIES
+		// ----------------------------------------
 		
+		// GETTERS - SETTERS
+		// ----------------------------------------
+			
+		// CONSTRUCTOR
+		// ----------------------------------------
 		public function BaseApp() 
 		{
-			if (stage) // On à déjà un stage.
-			{
-				if (stage.stageWidth > 0 && stage.stageHeight > 0) // Pas de bug de dimmension du stage.
-				{
-					StageReference.setStage(stage);
-					_startApp();
-				}
-				else // On a le bug !
-				{
-					// Anit bug taille du stage = 0 dans ie.			
-					stage.addEventListener(Event.RESIZE, _initResizeHandler);			
-					stage.dispatchEvent(new Event(Event.RESIZE));
-				}
-			}
-			else	// On a pas de stage (swf chargé dans une autre anim).
-			{
-				// On écoute l'ajout au stage.
-				addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
-			}
+			// On test la présence d'un stage.
+			if (stage) _addedToStageHandler();
+			else addEventListener(Event.ADDED_TO_STAGE, _addedToStageHandler);
 		}
 		
-		private function addedToStageHandler(e:Event):void 
-		{
-			removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
-			
-			if (stage.stageWidth == 0 && stage.stageHeight == 0) // On a le bug !
-			{
-				// Anit bug taille du stage = 0 dans ie.			
-				stage.addEventListener(Event.RESIZE, _initResizeHandler);			
-				stage.dispatchEvent(new Event(Event.RESIZE));
-			}
-			else // Pas de bug de dimmension du stage.
-			{
-				StageReference.setStage(stage);
-				_startApp();
-			}
-			
-		}
-		
-		
-		private function _initResizeHandler(e:Event):void 
-		{
-			if (stage.stageHeight > 0 && stage.stageWidth > 0) {
-				
-				stage.removeEventListener(Event.RESIZE, _initResizeHandler); // only execute once
-				
-				StageReference.setStage(stage);
-				_startApp();
-			}
-		}
-		
+		// METHODS
+		// ----------------------------------------
+		/**
+		 * Point d'entrée de l'application.
+		 * Fonction éxecutée quand on est sur d'avoir accès au stage et que ses dimensions ne sont pas égales à 0.
+		 */
 		protected function _startApp():void 
 		{
 			throw new Error("Cette méthode doit etre surchargée !");
 		}
+		
+		// EVENTS HANDLERS
+		// ----------------------------------------
+		
+		private function _addedToStageHandler(e:Event = null):void 
+		{
+			removeEventListener(Event.ADDED_TO_STAGE, _addedToStageHandler);
+			trace("stageWidth : " + stage.stageWidth, "stageHeight : " + stage.stageHeight);
+			
+			/**
+			 * Test la présence d'un bug dans IE qui renvoi 0 pour les dimensions du stage.
+			 * Attention ce hack ne foncitonne que si le stage est StageAlign.TOP_LEFT et StageScaleMode.NO_SCALE 
+			 */
+			if (stage.stageHeight <= 0 && stage.stageWidth <= 0)
+			{
+				trace("!!!!!!!!!!!!!! Bug IE stageWidth : " + stage.stageWidth, "stageHeight : " + stage.stageHeight + " !!!!!!!!!!!!!!");
+				// On écoute le resize
+				stage.addEventListener(Event.RESIZE, _resizeHandler);
+				stage.dispatchEvent(new Event(Event.RESIZE)); // force stage resize event for normal cases
+			}
+			else
+			{
+				// On peut démarrer l'application.
+				StageReference.setStage(stage);
+				_startApp();
+			}
+			
+		}
+		
+		
+		private function _resizeHandler(e:Event):void 
+		{
+			if (stage.stageHeight > 0 && stage.stageWidth > 0) {
+				
+				stage.removeEventListener(Event.RESIZE, _resizeHandler); // only execute once
+				
+				StageReference.setStage(stage);
+				_startApp();
+			}
+		}
+		
+		
 		
 	}
 	
