@@ -36,83 +36,97 @@ package com.zombiz.app
 	import flash.events.Event;
 	
 	/**
-	 * Permet d'avoir un accès sécurisé au stage grace à la méthode statique getStage()
+	 * Permet d'avoir un accès sécurisé au stage.
 	 * Permet d'éviter le bug d'IE qui renvoi un stage avec les propriétés stageWidth et stageHeight à 0.
 	 * Votre classe principale doit étendre cette classe.
 	 * @author Pascal Achard
 	 * @since 28/04/2010
-	 * @version 1.0.1
+	 * @version 1.0.0
 	 */
 	
 	public class BaseApp extends MovieClip
 	{
-		// PROPERTIES
-		// ----------------------------------------
 		
-		// GETTERS - SETTERS
-		// ----------------------------------------
-			
-		// CONSTRUCTOR
-		// ----------------------------------------
+		/**
+		 * Le constructeur
+		 */
 		public function BaseApp() 
 		{
-			// On test la présence d'un stage.
-			if (stage) _addedToStageHandler();
-			else addEventListener(Event.ADDED_TO_STAGE, _addedToStageHandler);
+			// On initalise le stage.
+			_initStage();
+			
 		}
 		
-		// METHODS
-		// ----------------------------------------
 		/**
-		 * Point d'entrée de l'application.
-		 * Fonction éxecutée quand on est sur d'avoir accès au stage et que ses dimensions ne sont pas égales à 0.
+		 * Initialise le stage.
 		 */
-		protected function _startApp():void 
+		protected function _initStage():void 
 		{
-			throw new Error("Cette méthode doit etre surchargée !");
+			if (stage) // On à déjà un stage.
+			{
+				if (stage.stageWidth > 0 && stage.stageHeight > 0) // Pas de bug de dimmension du stage.
+				{
+					StageReference.setStage(stage);
+					_onStageIsInit();
+				}
+				else // On a le bug !
+				{
+					// Anit bug taille du stage = 0 dans ie.			
+					stage.addEventListener(Event.RESIZE, _initResizeHandler);			
+					stage.dispatchEvent(new Event(Event.RESIZE));
+				}
+			}
+			else	// On a pas de stage (swf chargé dans une autre anim).
+			{
+				// On écoute l'ajout au stage.
+				addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
+			}
 		}
 		
-		// EVENTS HANDLERS
-		// ----------------------------------------
-		
-		private function _addedToStageHandler(e:Event = null):void 
+		/**
+		 * Déclanché sur le Event.ADDED_TO_STAGE
+		 * @param	e
+		 */
+		private function addedToStageHandler(e:Event):void 
 		{
-			removeEventListener(Event.ADDED_TO_STAGE, _addedToStageHandler);
-			trace("stageWidth : " + stage.stageWidth, "stageHeight : " + stage.stageHeight);
+			removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 			
-			/**
-			 * Test la présence d'un bug dans IE qui renvoi 0 pour les dimensions du stage.
-			 * Attention ce hack ne foncitonne que si le stage est StageAlign.TOP_LEFT et StageScaleMode.NO_SCALE 
-			 */
-			if (stage.stageHeight <= 0 && stage.stageWidth <= 0)
+			if (stage.stageWidth == 0 && stage.stageHeight == 0) // On a le bug !
 			{
-				trace("!!!!!!!!!!!!!! Bug IE stageWidth : " + stage.stageWidth, "stageHeight : " + stage.stageHeight + " !!!!!!!!!!!!!!");
-				// On écoute le resize
-				stage.addEventListener(Event.RESIZE, _resizeHandler);
-				stage.dispatchEvent(new Event(Event.RESIZE)); // force stage resize event for normal cases
+				// Anit bug taille du stage = 0 dans ie.			
+				stage.addEventListener(Event.RESIZE, _initResizeHandler);			
+				stage.dispatchEvent(new Event(Event.RESIZE));
 			}
-			else
+			else // Pas de bug de dimmension du stage.
 			{
-				// On peut démarrer l'application.
 				StageReference.setStage(stage);
-				_startApp();
+				_onStageIsInit();
 			}
 			
 		}
 		
-		
-		private function _resizeHandler(e:Event):void 
+		/**
+		 * Déclanché sur le resise
+		 * @param	e
+		 */
+		private function _initResizeHandler(e:Event):void 
 		{
 			if (stage.stageHeight > 0 && stage.stageWidth > 0) {
 				
-				stage.removeEventListener(Event.RESIZE, _resizeHandler); // only execute once
+				stage.removeEventListener(Event.RESIZE, _initResizeHandler); // only execute once
 				
 				StageReference.setStage(stage);
-				_startApp();
+				_onStageIsInit();
 			}
 		}
 		
-		
+		/**
+		 * Quand le stage à été initialisé.
+		 */
+		protected function _onStageIsInit():void 
+		{
+			//throw new Error("Cette méthode doit etre surchargée !");
+		}
 		
 	}
 	
