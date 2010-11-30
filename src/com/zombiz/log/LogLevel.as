@@ -21,7 +21,7 @@ package com.zombiz.log {
 
 		
 		public static const BENCH : LogLevel = new LogLevel("BENCH", 0x37BBF2, 0) ;
-		public static const INFO : LogLevel = new LogLevel("INFO", 0x76C102, 0) ;
+		public static const INFO : LogLevel = new LogLevel("INFO", 0xF4F4F4, 0) ;
 		public static const CARE : LogLevel = new LogLevel("CARE", 0xC9C102, 100) ;
 		public static const WARNING : LogLevel = new LogLevel("WARNING", 0xFFBF00, 200) ;
 		public static const ERROR : LogLevel = new LogLevel("ERROR", 0xF26304, 300);

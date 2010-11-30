@@ -4,6 +4,7 @@
 	// <=__________________________ IMPORTS __________________________=> //
 	
 	
+	import fl.controls.TextArea;
 	import fl.controls.UIScrollBar;
 	
 	import flash.display.Sprite;
@@ -30,6 +31,8 @@
 		protected var _textFormat : TextFormat;
 
 		protected var _scroll:UIScrollBar;
+		
+		private const WELCOME_MSG:String = "                     _     _     \n  _______  _ __ ___ | |__ (_)____\n |_  / _ \\| '_ ` _ \\| '_ \\| |_  /\n  / / (_) | | | | | | |_) | |/ / \n /___\\___/|_| |_| |_|_.__/|_/___|\n\n Logger v0.1\n\n";
 		
 		
 		// _________________________________________________________________ //
@@ -65,11 +68,14 @@
 			if ( maxScrolled || lastScroll >= _textField.maxScrollV )
 				_textField.scrollV = _textField.maxScrollV;
 			else _textField.scrollV = lastScroll;
+			
 			// On applique la couleur au texte nouvellement ajouté.
 			_textFormat.color = pColor;
 			_textField.setTextFormat(_textFormat, _textField.length - pMessage.length - 1, _textField.length) ;
+				
+			
 			// MAJ de la scrollBar.
-//			_scroll.update ( ) ;
+			_scroll.update ( ) ;
 		}
 
 		
@@ -94,7 +100,10 @@
 			
 			_textField = _createTextField() ;
 			
-			_textFormat = new TextFormat("_sans") ;
+			_textFormat = new TextFormat() ;
+			_textFormat.font = "ProFontWindows_9pt_st";
+			_textField.textColor = 0xF4F4F4;
+			_textFormat.size = 9;
 			_textField.defaultTextFormat = _textFormat ;
 			
 			_scroll = new UIScrollBar ( ) ;
@@ -118,6 +127,10 @@
 				print("LocalConnection error : connection is already used.", 0xcccccc) ;
 			}
 			
+			
+			// Les texte de bienvenue.
+			print(WELCOME_MSG, 0xCCCCCC);
+			
 			stage.addEventListener(Event.RESIZE, _stageResizeHandler) ;
 			
 			_stageResizeHandler() ;
@@ -125,7 +138,7 @@
 
 		protected function _menuClearHandler(e : ContextMenuEvent) : void {
 			_textField.text = "";
-//			_scroll.update ( ) ;
+			_scroll.update ( ) ;
 		}
 
 		protected function _menuSeparatorEndHandler(e : ContextMenuEvent) : void {
@@ -133,15 +146,17 @@
 		}
 
 		protected function _stageResizeHandler(e : Event = null) : void {
-//			_textField.width = _scroll.x = stage.stageWidth - _scroll.width;
-//			_textField.height = _scroll.height = stage.stageHeight;
-//			_scroll.update ( ) ;
+			_textField.width = _scroll.x = stage.stageWidth - _scroll.width;
+			_textField.height = _scroll.height = stage.stageHeight;
+			_scroll.update ( ) ;
+			
 		}
 
 		protected function _createTextField() : TextField {
 			var tf : TextField = new TextField() ;
 			tf.wordWrap = true;
 			tf.multiline = true;
+			tf.embedFonts = true;
 			
 			var menu : ContextMenu = new ContextMenu() ;
 			var itemClear : ContextMenuItem = new ContextMenuItem("Clear") ;

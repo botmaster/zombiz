@@ -67,7 +67,7 @@ package com.zombiz.data.collection.simplecollection
             }            
             else 
             {
-                pElements = new Array();
+                _items = new Array();
             }
 		}
 		
@@ -83,6 +83,7 @@ package com.zombiz.data.collection.simplecollection
 				return false;
 			}
 			_items.push(pValue);
+			return true;
 		}
 		
 		public function clear():void
