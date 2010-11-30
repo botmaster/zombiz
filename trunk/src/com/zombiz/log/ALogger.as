@@ -30,7 +30,7 @@ package com.zombiz.log {
 
 		
 		protected var _logsCount : uint = 0;
-		protected var _separator : String = "-    -";
+		protected var _separator : String = "  ";
 		protected var _defaultLogLevel : LogLevel = LogLevel.INFO;
 		protected var _dateFormater : DateFormater;
 
@@ -77,7 +77,7 @@ package com.zombiz.log {
 			var output : String = "";
 			
 			// /!\ on perd les valeurs null et undefined dans le join() sur les parameters.
-			output += _logsCount + _separator + pLog.level.label + _separator + pLog.parameters.join(" ") + _separator + formatDateToString(pLog.date) ;
+			output += _logsCount +"\t" + _separator + pLog.level.label + _separator + pLog.parameters.join(" ") + _separator + formatDateToString(pLog.date);
 			
 			return 	output;
 		}
