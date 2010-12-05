@@ -81,9 +81,8 @@ package com.zombiz.utils.debug
 		{
 			// Si on clique sur ctrl+alt+shift+w
 			if (e.ctrlKey && e.shiftKey && e.altKey && e.keyCode == 87) {
-				trace( "_appSO.data.debugMode : " + _appSO.data.debugMode );
 				_appSO.data.debugMode = !_appSO.data.debugMode;
-				trace( "_appSO.data.debugMode : " + _appSO.data.debugMode );
+				trace( "_appSO.data.debugMode : " + _appSO.data.debugMode );	
 				
 				MonsterDebugger.enabled = _appSO.data.debugMode;
 				trace( "MonsterDebugger.enabled : " + MonsterDebugger.enabled );
