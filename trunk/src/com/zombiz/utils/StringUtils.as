@@ -238,7 +238,6 @@ package com.zombiz.utils
 		*/
 		public static function capitalize(p_string:String, ...args):String {
 			var str:String = trimLeft(p_string);
-			trace('capl', args[0])
 			if (args[0] === true) { return str.replace(/^.|\b./g, _upperCase);}
 			else { return str.replace(/(^\w)/, _upperCase); }
 		}
@@ -727,7 +726,6 @@ package com.zombiz.utils
 		}
 
 		private static function _upperCase(p_char:String, ...args):String {
-			trace('cap latter ',p_char)
 			return p_char.toUpperCase();
 		}
 
