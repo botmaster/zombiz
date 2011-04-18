@@ -3,13 +3,13 @@
   All rights reserved.
 */
 
-package fr.cuponk.display.scrollbar 
+package com.zombiz.display.scrollbar 
 {
 	
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import fr.cuponk.display.scrollbar.events.ScrollBarEvent;
+	import com.zombiz.display.scrollbar.events.ScrollBarEvent
 	
 	/**
 	 * ...

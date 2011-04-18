@@ -3,7 +3,7 @@
   All rights reserved.
 */
 
-package fr.cuponk.display.scrollbox 
+package com.zombiz.display.scrollbox 
 {
 	
 	import com.greensock.TweenLite;
@@ -12,8 +12,8 @@ package fr.cuponk.display.scrollbox
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import fr.cuponk.display.scrollbar.events.ScrollBarEvent;
-	import fr.cuponk.display.scrollbar.ScrollBar;
+	import com.zombiz.display.scrollbar.events.ScrollBarEvent
+	import com.zombiz.display.scrollbar.ScrollBar
 	
 	/**
 	 * ...

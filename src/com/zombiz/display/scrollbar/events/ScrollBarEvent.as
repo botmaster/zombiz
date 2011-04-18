@@ -1,4 +1,4 @@
-package fr.cuponk.display.scrollbar.events 
+package com.zombiz.display.scrollbar.events 
 {
 	import flash.events.Event;
 	
