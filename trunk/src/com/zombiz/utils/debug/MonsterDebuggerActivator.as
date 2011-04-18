@@ -5,9 +5,17 @@
 
 package com.zombiz.utils.debug 
 {   
+	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.events.KeyboardEvent;
+	import flash.events.TimerEvent;
 	import flash.net.SharedObject;
+	import flash.text.AntiAliasType;
+	import flash.text.GridFitType;
+	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
+	import flash.text.TextFormat;
+	import flash.utils.Timer;
 	import nl.demonsters.debugger.MonsterDebugger;
 	
 	/**
@@ -25,6 +33,10 @@ package com.zombiz.utils.debug
 		private var _isInit:Boolean;										// On sctock si on à fait l'init ou pas.
 		private static var _SOName:String;									// Le nom du SO.
 		private static var _instance:MonsterDebuggerActivator;				// Singleton instance.
+		
+		private static const KEY:int = 87; 									// "w"
+		
+		private var _stage:Stage;											// le stage.
 		
 		// SINGLETON CONSTRUCTOR
 		// ----------------------------------------
@@ -68,11 +80,54 @@ package com.zombiz.utils.debug
 			
 			// Si _appSO.data.debugMode = true c'est que MonsterDebugger à été activé
 			MonsterDebugger.enabled = (_appSO.data.debugMode) ? true : false;
-			trace("MonsterDebugger.enabled = " + MonsterDebugger.enabled);
 			
 			// On écoute le keydown.
-			pStage.addEventListener(KeyboardEvent.KEY_DOWN, keyDownHandler);
+			_stage = pStage;
+			_stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDownHandler);
 		}
+		
+		private function _buildLog(pMsg:String):void 
+		{
+			var format:TextFormat = new TextFormat();
+			format.font = "Arial";
+			format.size = 11;
+			format.color = 0x00FF00;
+			
+			var tf:TextField = _creatTextField(format);
+			tf.text = pMsg;
+			
+			_stage.addChild(tf);
+			
+			var timeOut:Timer = new Timer(1500);
+			timeOut.start();
+			timeOut.addEventListener(TimerEvent.TIMER, function ():void 
+			{
+				if (tf && _stage.contains(tf));
+				{
+					_stage.removeChild(tf);
+				}
+				timeOut.removeEventListener(TimerEvent.TIMER, arguments.callee);
+				
+			}, false, 0, true);
+		}
+		
+		private function _creatTextField(pFormat:TextFormat):TextField 
+		{
+			var tf:TextField = new TextField();
+			//tf.embedFonts = true;
+			tf.defaultTextFormat = pFormat;
+			tf.autoSize = TextFieldAutoSize.LEFT;
+			tf.background = true;
+			tf.multiline = false;
+			tf.wordWrap = false;
+			tf.selectable = false;
+			tf.mouseWheelEnabled = false;
+			//tf.antiAliasType = AntiAliasType.ADVANCED; 
+			
+			return tf;
+		}
+		
+		
 		
 		// EVENTS HANDLERS
 		// ----------------------------------------
@@ -80,16 +135,17 @@ package com.zombiz.utils.debug
 		private function keyDownHandler(e:KeyboardEvent):void 
 		{
 			// Si on clique sur ctrl+alt+shift+w
-			if (e.ctrlKey && e.shiftKey && e.altKey && e.keyCode == 87) {
-				_appSO.data.debugMode = !_appSO.data.debugMode;
-				trace( "_appSO.data.debugMode : " + _appSO.data.debugMode );	
-				
-				MonsterDebugger.enabled = _appSO.data.debugMode;
-				trace( "MonsterDebugger.enabled : " + MonsterDebugger.enabled );
+			if (e.ctrlKey && e.shiftKey && e.altKey && e.keyCode == KEY) {
+				_appSO.data.debugMode = !_appSO.data.debugMode;				
+				MonsterDebugger.enabled = _appSO.data.debugMode;				
+				_buildLog("MonsterDebugger.enabled : "+ MonsterDebugger.enabled);
 				_appSO.flush();
 				
 			}
 		}
+		
+		
+		
 		
 	}
 }
