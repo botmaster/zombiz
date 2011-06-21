@@ -41,6 +41,7 @@ package com.zombiz.media.events
 		public static const COMPLETED_EVENT:String				= "COMPLETED_EVENT";
 		public static const BUFFERING_EVENT:String 				= "BUFFERING_EVENT";
         public static const BUFFERED_EVENT:String 				= "BUFFERED_EVENT";
+		public static const LOOP_EVENT:String 					= "LOOP_EVENT";
 		
 		
 		public function MediaEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false) 

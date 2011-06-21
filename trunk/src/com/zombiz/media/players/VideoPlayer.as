@@ -84,6 +84,12 @@ package com.zombiz.media.players
 		 */
 		private var _videoEnded:Boolean;
 		
+		/**
+		 * On stock le dernier infocode de la vidéo
+		 * Principalement pour tester si la vidéo est terminée.
+		 */
+		private var _playerLastInfoCode:String;
+		
 		
 		
 		
@@ -194,6 +200,26 @@ package com.zombiz.media.players
 			_videoDisplay.attachNetStream(_netStream);
 		}
 		
+		/**
+		 * La vidéo est terminée.
+		 */
+		protected function onVideoComplete():void 
+		{
+			_videoEnded = false;
+			
+			// On boucle ou pas ?
+			if (_loop)
+			{
+				_netStream.seek(0);
+                _netStream.resume();
+                this.dispatchEvent(new MediaEvent(MediaEvent.LOOP_EVENT));
+                return;
+			}
+			
+			// On stop !
+			stop();
+			dispatchEvent(new MediaEvent(MediaEvent.COMPLETED_EVENT));
+		}
 		
 		protected function playStream() : void
         {
@@ -238,6 +264,8 @@ package com.zombiz.media.players
 			_videoDisplay.width = _size.width;
 			_videoDisplay.height = _size.height;
 		}
+		
+		
 		
 		/**
 		 * Charge la vidéo.
@@ -347,7 +375,20 @@ package com.zombiz.media.players
 				case "NetStream.Buffer.Full": 
 					setBufferStatus(false);
 					break;
+				case "NetStream.Buffer.Flush":
+					
+                    break;
+				default:
+				{
+					
+				}
 			}
+			// On test si c'est la fin de la vidéo.
+			/*if (_playerLastInfoCode == "NetStream.Buffer.Flush" &&
+				e.info.code == "NetStream.Play.Stop") { // Stopped
+				StopPlayback(event); // Or any other thing you want to do
+			}*/
+			
 		}
 		
 		private function _securityErrorHandler(e:SecurityErrorEvent):void 
@@ -363,17 +404,14 @@ package com.zombiz.media.players
 		
 		
 		/**
-		 * Ecoute la progression du media.
+		 * Ecoute la progression de lecture du media.
 		 * @param	e
 		 */
 		override protected function progressTimerHandler(e:TimerEvent):void 
 		{
 			
 			if (_position == _duration || _videoEnded) {
-				_videoEnded = false;
-				stop();
-				
-				dispatchEvent(new MediaEvent(MediaEvent.COMPLETED_EVENT));
+				onVideoComplete();
 			}
 			
 			super.progressTimerHandler(e);
