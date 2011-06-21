@@ -223,9 +223,6 @@ package com.zombiz.media.players
 		
 		protected function playStream() : void
         {
-            /*this._flushed = false;
-            this._stopped = false;
-            this._netStream.bufferTime = _bufferTime;*/
 			
 			// La vidéo n'est pas terminée.
 			_videoEnded =  false;
