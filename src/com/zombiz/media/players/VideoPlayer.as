@@ -5,7 +5,6 @@
 
 package com.zombiz.media.players 
 {
-	import com.demonsters.debugger.MonsterDebugger;
 	import com.zombiz.media.APlayer;
 	import com.zombiz.media.events.MediaEvent;
 	import com.zombiz.media.PlayerStates;
@@ -17,6 +16,8 @@ package com.zombiz.media.players
 	import flash.media.Video;
 	import flash.net.NetConnection;
 	import flash.net.NetStream;
+	import flash.utils.Timer;
+	import nl.demonsters.debugger.MonsterDebugger;
 	
 	
 	
@@ -90,6 +91,28 @@ package com.zombiz.media.players
 		 */
 		private var _playerLastInfoCode:String;
 		
+		/**
+		 * Le timer du chargement.
+		 */
+		private var _timerLoad:Timer;
+		
+		/**
+		 * Les bytes loaded.
+		 */
+		private var _bytesLoaded:uint;
+		
+		/**
+		 * Les bytes total.
+		 */
+		private var _bytesTotal:uint;
+		
+		/**
+		 * Le % de chargement.
+		 */
+		private var _loadProgress:Number;
+		
+		
+		
 		
 		
 		
@@ -128,6 +151,21 @@ package com.zombiz.media.players
 			
 			return _netStream.time;
 		}
+		
+		public function get bytesLoaded():uint 
+		{
+			return _bytesLoaded;
+		}
+		
+		public function get bytesTotal():uint 
+		{
+			return _bytesTotal;
+		}
+		
+		public function get loadProgress():Number 
+		{
+			return _loadProgress;
+		}
 			
 		// CONSTRUCTOR
 		// ----------------------------------------
@@ -149,6 +187,9 @@ package com.zombiz.media.players
 			
 			// On créer le custom client pour les metatdata, cuepoints...
 			_client = new CustomClient(this, _autoSize);
+			
+			// On créer le timer qui gère le chargement.
+			_setupTimer();
 		}
 		
 		// METHODS
@@ -169,7 +210,7 @@ package com.zombiz.media.players
 		 */
 		private function _setupNetConnection():void 
 		{
-			MonsterDebugger.trace(this, "Setup of NetConnection.", "Botmaster", "", 0xff00ff, 1);
+			MonsterDebugger.trace(this, "Setup of NetConnection.", 0xff00ff, false, 1);
 			_netConnection = new NetConnection();
             _netConnection.addEventListener(NetStatusEvent.NET_STATUS, _netStatusHandler);
 			_netConnection.addEventListener(SecurityErrorEvent.SECURITY_ERROR, _securityErrorHandler); 
@@ -179,14 +220,12 @@ package com.zombiz.media.players
 		}
 		
 		
-		
-		
 		/**
 		 * Créer le NetStream.
 		 */
 		private function _setupNetStream():void 
 		{
-			MonsterDebugger.trace(this, "Setup of NetStream.", "Botmaster", "", 0xff00ff, 1);
+			MonsterDebugger.trace(this, "Setup of NetStream.", 0xff00ff, false, 1);
 			_netStream = new NetStream(_netConnection);
 			_netStream.bufferTime = VideoPlayer.DEFAULT_BUFFERING_TIME;
 			_netStream.client = _client;
@@ -200,6 +239,21 @@ package com.zombiz.media.players
 			_videoDisplay.attachNetStream(_netStream);
 		}
 		
+		
+		/**
+		 * Créer le timer du chargement.
+		 */
+		private function _setupTimer() : void
+        {
+			if (_timerLoad) return;
+            _timerLoad = new Timer(30);
+            _timerLoad.addEventListener(TimerEvent.TIMER, _loadProgessHandler, false, 0, true);
+            return;
+        }
+		
+		
+		
+		
 		/**
 		 * La vidéo est terminée.
 		 */
@@ -212,7 +266,7 @@ package com.zombiz.media.players
 			{
 				_netStream.seek(0);
                 _netStream.resume();
-                this.dispatchEvent(new MediaEvent(MediaEvent.LOOP_EVENT));
+                dispatchEvent(new MediaEvent(MediaEvent.LOOP_EVENT));
                 return;
 			}
 			
@@ -281,6 +335,9 @@ package com.zombiz.media.players
 				playStream();
 			}
 			
+			// On ecoute le chargement de la vidéo.
+			_timerLoad.start();
+			
 		}
 		
 		override public function play():void 
@@ -343,7 +400,7 @@ package com.zombiz.media.players
 		// ----------------------------------------
 		private function _netStatusHandler(e:NetStatusEvent):void 
 		{
-			MonsterDebugger.trace(this, e.info);
+			// MonsterDebugger.trace(this, e.info);
 			switch (e.info.code) {
 				
                 case "NetConnection.Connect.Success":
@@ -397,6 +454,29 @@ package com.zombiz.media.players
 		private function _asyncErrorHandler(e:AsyncErrorEvent):void 
 		{
 			// ignore AsyncErrorEvent events.
+		}
+		
+		
+		/**
+		 * Ecoute le chargement.
+		 * @param	e
+		 */
+		private function _loadProgessHandler(e:TimerEvent):void 
+		{
+			_bytesLoaded = _netStream.bytesLoaded;
+            _bytesTotal = _netStream.bytesTotal;
+            _loadProgress = _bytesLoaded / _bytesTotal;
+            dispatchEvent(new MediaEvent(MediaEvent.LOAD_PROGRESS));
+            if (_loadProgress >= 1)
+            {
+                dispatchEvent(new MediaEvent(MediaEvent.LOAD_COMPLETED));
+				
+				// On stop le timer.
+                _timerLoad.reset();
+				_timerLoad.stop();
+                return;
+            }
+            return;
 		}
 		
 		
