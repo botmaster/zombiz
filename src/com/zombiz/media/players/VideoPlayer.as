@@ -498,7 +498,10 @@ package com.zombiz.media.players
 
 }
 
-import com.zombiz.media.players.*
+
+
+import com.zombiz.media.players.VideoPlayer;
+
 class CustomClient {
 	
 	private var _videoPlayer:VideoPlayer;
