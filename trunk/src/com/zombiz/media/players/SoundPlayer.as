@@ -5,7 +5,6 @@
 
 package com.zombiz.media.players 
 {
-	import com.demonsters.debugger.MonsterDebugger;
 	import com.zombiz.media.APlayer;
 	import com.zombiz.media.events.MediaEvent;
 	import com.zombiz.media.PlayerStates;
@@ -18,6 +17,7 @@ package com.zombiz.media.players
 	import flash.media.SoundChannel;
 	import flash.net.URLRequest;
 	import flash.utils.Timer;
+	import nl.demonsters.debugger.MonsterDebugger;
 	
 	
 	/**
@@ -321,7 +321,7 @@ package com.zombiz.media.players
 		 */
 		private function _ID3Handler(e:Event):void 
 		{
-			MonsterDebugger.log("Données ID3 reçues !");
+			//MonsterDebugger.log("Données ID3 reçues !");
 			_id3 = e.currentTarget.id3;
 		}
 		
@@ -331,7 +331,7 @@ package com.zombiz.media.players
 		 */
 		private function _playCompletedHandler(e:Event):void 
 		{
-			MonsterDebugger.log("Média terminé !");
+			//MonsterDebugger.log("Média terminé !");
 			dispatchEvent(new MediaEvent(MediaEvent.COMPLETED_EVENT));
 		}
 		
